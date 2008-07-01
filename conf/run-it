@@ -43,4 +43,4 @@ do
 	PORT=$(($PORT + 2))
 done
 
-echo -n $(($PORT + 3)) > conf/port
+#echo -n $(($PORT + 3)) > conf/port
