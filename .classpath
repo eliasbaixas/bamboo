@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="examples"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="commons-cli-1.0.jar"/>
+	<classpathentry kind="lib" path="db-4.2.52.jar" sourcepath="/Users/elias/Downloads/db-4.2.52/java"/>
+	<classpathentry kind="lib" path="diva-26Sep02.jar"/>
+	<classpathentry kind="lib" path="jrpcgen.jar"/>
+	<classpathentry kind="lib" path="log4j-1.2.8.jar" sourcepath="/Users/elias/src/java/jakarta-log4j-1.2.8/src"/>
+	<classpathentry kind="lib" path="oncrpc.jar"/>
+	<classpathentry kind="lib" path="ostore-seda-emu.jar" sourcepath="/Users/elias/src/java/pond"/>
+	<classpathentry kind="lib" path="xmlrpc-1.2-b1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

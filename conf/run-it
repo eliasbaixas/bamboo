@@ -1,0 +1,46 @@
+#!/bin/bash
+howmany=$1
+if [ -z "$howmany" ]
+then howmany=9
+fi
+
+#PORT=$(cat conf/port)
+#if [ $? != 0 -o -z "$PORT" ]
+#then PORT=5850
+#fi
+PORT=5850
+
+HOSTIP=127.0.0.1
+MY_GW=$HOSTIP:$PORT
+count=0
+CLASSPATH="commons-cli-1.0.jar:\
+db-4.2.52.jar:\
+diva-26Sep02.jar:\
+jrpcgen.jar:\
+log4j-1.2.8.jar:\
+oncrpc.jar:\
+ostore-seda-emu.jar:\
+xmlrpc-1.2-b1.jar:\
+bin"
+
+while [ "$count" -le "$howmany" ]
+do
+	NODEID=$HOSTIP:$PORT
+	GWPORT=$(($PORT+2))
+	CFG=conf/tmp/config-$PORT
+	
+	sed -e "s/\\\${LogFile}/logs\/log-$PORT/" conf/logger-config > conf/tmp/logger-config-$PORT
+	sed -e "s/\\\${CacheDir}/\/tmp\/store\/store-$PORT/
+	s/\\\${NodeID}/$NODEID/
+	s/\\\${MyGw}/$MY_GW/
+	s/\\\${GatewayPort}/$GWPORT/
+	s/\\\${HostName}/$HOSTIP/" conf/openhash.cfg  > $CFG
+	
+	/usr/bin/java -classpath "$CLASSPATH" -Dlog4j.config=conf/log4j.properties \
+	-Dlog4j.debug=true -Djava.library.path=/Users/elias/Documents/workspace/bdb-4.2.52/libs \
+	bamboo.lss.DustDevil -l conf/tmp/logger-config-$PORT $CFG >& conf/tmp/not-logged & echo $! > conf/tmp/pid-$PORT
+	count=$(($count + 1))
+	PORT=$(($PORT + 2))
+done
+
+echo -n $(($PORT + 3)) > conf/port

@@ -1,0 +1,32 @@
+#
+# Copyright (c) 2001-2003 Regents of the University of California.
+# All rights reserved.
+#
+# See the file LICENSE included in this distribution for details.
+#
+
+ifdef JAVAHOME
+JAVAC=$(JAVAHOME)/bin/javac
+else
+JAVAC=$(shell which javac)
+endif
+
+JARS:=$(wildcard $(BAMBOO_HOME)/lib/*.jar)
+JARS:=$(shell echo $(JARS) | sed -e 's/  */:/g')
+
+JFLAGS=-deprecation -g -source 1.5
+GJC_JAR=$(BAMBOO_HOME)/lib/gjc-rt.jar
+ifneq ($(shell if test -f $(GJC_JAR); then ls $(GJC_JAR); fi),)
+    JFLAGS+=-J-Xbootclasspath/p:$(BAMBOO_HOME)/lib/gjc-rt.jar -bootclasspath $(BAMBOO_HOME)/lib/gjc-rt.jar:$(BAMBOO_HOME)/lib/collect.jar:/System/Library/Frameworks/JavaVM.framework/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Classes/jce.jar -source 1.5 -target jsr14 #-Xlint:unchecked
+endif
+
+CLASSPATH:=$(CLASSPATH):$(BAMBOO_HOME)/src:$(JARS)
+
+ifeq (Windows_NT,$(OS))
+   CLASSPATH := $(shell cygpath -pw $(CLASSPATH))
+endif
+
+%.class: %.java
+	@echo $<
+	@CLASSPATH="$(CLASSPATH)" $(JAVAC) $(JFLAGS) $<
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#GATEWAYS=""
+
+#GATEWAYS="$GATEWAYS http://12.46.129.21:5851/"
+#GATEWAYS="$GATEWAYS http://128.208.4.197:5851/"
+#GATEWAYS="$GATEWAYS http://169.229.50.14:5851/"
+#GATEWAYS="$GATEWAYS http://152.3.138.1:5851/" #(does not respond)
+#GATEWAYS="$GATEWAYS http://128.223.6.111:5851/"
+#GATEWAYS="$GATEWAYS http://128.83.143.152:5851/"
+#GATEWAYS="$GATEWAYS http://141.213.4.201:5851/"
+#GATEWAYS="$GATEWAYS http://132.239.17.224:5851/" #(does not respond)
+
+#Gateways are now hard-coded into FetchNodeThread.java
+../../../bin/run-java -mx32M bamboo.vis.Vis & #$GATEWAYS &
+
