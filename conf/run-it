@@ -9,10 +9,10 @@ fi
 #then PORT=5850
 #fi
 PORT=5850
-
 HOSTIP=127.0.0.1
 MY_GW=$HOSTIP:$PORT
 count=0
+JAVA_LIB_PATH="/Users/elias/Documents/workspace/bdb-4.2.52/libs"
 CLASSPATH="commons-cli-1.0.jar:\
 db-4.2.52.jar:\
 diva-26Sep02.jar:\
@@ -37,7 +37,7 @@ do
 	s/\\\${HostName}/$HOSTIP/" conf/openhash.cfg  > $CFG
 	
 	/usr/bin/java -classpath "$CLASSPATH" -Dlog4j.config=conf/log4j.properties \
-	-Dlog4j.debug=true -Djava.library.path=/Users/elias/Documents/workspace/bdb-4.2.52/libs \
+	-Dlog4j.debug=true -Djava.library.path=$JAVA_LIB_PATH \
 	bamboo.lss.DustDevil -l conf/tmp/logger-config-$PORT $CFG >& conf/tmp/not-logged & echo $! > conf/tmp/pid-$PORT
 	count=$(($count + 1))
 	PORT=$(($PORT + 2))
